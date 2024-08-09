@@ -8,6 +8,42 @@ class ShowNumpadPicker {
 }
 
 
+Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
+  return showModalBottomSheet<String>(
+    context: context,
+    builder: (BuildContext context) {
+      String selectedValue = '';
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Numpad(
+                length: length,
+                onChange: (value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(selectedValue);
+                  },
+                  child: Text('Done'),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
+
 class Numpad extends StatefulWidget {
   final int length;
   final Function(String) onChange;
@@ -199,39 +235,4 @@ class NumpadButton extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
-  return showModalBottomSheet<String>(
-    context: context,
-    builder: (BuildContext context) {
-      String selectedValue = '';
-      return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Numpad(
-                length: length,
-                onChange: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(selectedValue);
-                  },
-                  child: Text('Done'),
-                ),
-              ),
-            ],
-          );
-        },
-      );
-    },
-  );
 }
