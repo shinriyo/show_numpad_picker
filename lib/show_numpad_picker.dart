@@ -75,6 +75,20 @@ class _NumpadState extends State<Numpad> {
   String number = '';
 
   setValue(String val) {
+    if (val == '.' && number.isEmpty) {
+      // 最初に . が入力された場合、0. とする
+      setState(() {
+        number = '0.';
+        widget.onChange(number);
+      });
+      return;
+    }
+
+    if (val == '.' && number.contains('.')) {
+      // 既に . が含まれている場合は何もしない
+      return;
+    }
+
     if (number.length < widget.length) {
       setState(() {
         number += val;
@@ -84,9 +98,9 @@ class _NumpadState extends State<Numpad> {
   }
 
   backspace(String text) {
-    if (text.length > 0) {
+    if (text.isNotEmpty) {
       setState(() {
-        number = text.split('').sublist(0, text.length - 1).join('');
+        number = text.substring(0, text.length - 1);
         widget.onChange(number);
       });
     }
@@ -132,6 +146,7 @@ class _NumpadState extends State<Numpad> {
               ),
             ],
           ),
+          // 他の行のボタンを同様に配置
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -200,7 +215,7 @@ class _NumpadState extends State<Numpad> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               widget.isFloat ?
-                Expanded(
+              Expanded(
                   child: AspectRatio(
                     aspectRatio: 1.0,
                     child: NumpadButton(
@@ -208,13 +223,13 @@ class _NumpadState extends State<Numpad> {
                       onPressed: () => setValue('.'),
                     ),
                   )
-                ) :
-                Expanded(
-                  child: AspectRatio(
-                    aspectRatio: 1.0,
-                    child: NumpadButton(haveBorder: false),
-                  ),
+              ) :
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(haveBorder: false),
                 ),
+              ),
               Expanded(
                 child: AspectRatio(
                   aspectRatio: 1.0,
@@ -241,7 +256,6 @@ class _NumpadState extends State<Numpad> {
     );
   }
 }
-
 
 class Preview extends StatelessWidget {
   final int length;
