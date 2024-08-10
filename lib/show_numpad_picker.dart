@@ -15,27 +15,28 @@ Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
       String selectedValue = '';
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Numpad(
-                length: length,
-                onChange: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(selectedValue);
+          return SafeArea(
+            child: Wrap(
+              children: <Widget>[
+                Numpad(
+                  length: length,
+                  onChange: (value) {
+                    setState(() {
+                      selectedValue = value;
+                    });
                   },
-                  child: Text('Done'),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(selectedValue);
+                      },
+                      child: Text('Done'),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -86,66 +87,135 @@ class _NumpadState extends State<Numpad> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              NumpadButton(
-                text: '1',
-                onPressed: () => setValue('1'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '1',
+                    onPressed: () => setValue('1'),
+                  ),
+                ),
               ),
-              NumpadButton(
-                text: '2',
-                onPressed: () => setValue('2'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '2',
+                    onPressed: () => setValue('2'),
+                  ),
+                ),
               ),
-              NumpadButton(
-                text: '3',
-                onPressed: () => setValue('3'),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              NumpadButton(
-                text: '4',
-                onPressed: () => setValue('4'),
-              ),
-              NumpadButton(
-                text: '5',
-                onPressed: () => setValue('5'),
-              ),
-              NumpadButton(
-                text: '6',
-                onPressed: () => setValue('6'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '3',
+                    onPressed: () => setValue('3'),
+                  ),
+                ),
               ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              NumpadButton(
-                text: '7',
-                onPressed: () => setValue('7'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '4',
+                    onPressed: () => setValue('4'),
+                  ),
+                ),
               ),
-              NumpadButton(
-                text: '8',
-                onPressed: () => setValue('8'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '5',
+                    onPressed: () => setValue('5'),
+                  ),
+                ),
               ),
-              NumpadButton(
-                text: '9',
-                onPressed: () => setValue('9'),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '6',
+                    onPressed: () => setValue('6'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '7',
+                    onPressed: () => setValue('7'),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '8',
+                    onPressed: () => setValue('8'),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '9',
+                    onPressed: () => setValue('9'),
+                  ),
+                ),
               ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              NumpadButton(haveBorder: false),
-              NumpadButton(
-                text: '0',
-                onPressed: () => setValue('0'),
+              if (false) Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(haveBorder: false),
+                ),
               ),
-              NumpadButton(
-                haveBorder: false,
-                icon: Icons.backspace,
-                onPressed: () => backspace(number),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '.',
+                    onPressed: () => setValue('.'),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    text: '0',
+                    onPressed: () => setValue('0'),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: NumpadButton(
+                    haveBorder: false,
+                    icon: Icons.backspace,
+                    onPressed: () => backspace(number),
+                  ),
+                ),
               ),
             ],
           )
@@ -154,6 +224,7 @@ class _NumpadState extends State<Numpad> {
     );
   }
 }
+
 
 class Preview extends StatelessWidget {
   final int length;
