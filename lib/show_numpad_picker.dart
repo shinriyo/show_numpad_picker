@@ -10,6 +10,7 @@ class ShowNumpadPicker {
 Future<String?> showNumpadPicker(BuildContext context, {
   required int length,
   bool isFloat = false,
+  bool isPassword = false,
   String doneMessage = 'done',
 }) {
   return showModalBottomSheet<String>(
@@ -28,6 +29,7 @@ Future<String?> showNumpadPicker(BuildContext context, {
                   Numpad(
                     length: length,
                     isFloat: isFloat,
+                    isPassword: isPassword,
                     onChange: (value) {
                       setState(() {
                         selectedValue = value;
@@ -35,7 +37,8 @@ Future<String?> showNumpadPicker(BuildContext context, {
                     },
                   ),
                   SizedBox(
-                    width: double.infinity, // 横幅を最大に設定
+                    // set maximum
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop(selectedValue);
@@ -58,11 +61,13 @@ Future<String?> showNumpadPicker(BuildContext context, {
 class Numpad extends StatefulWidget {
   final int length;
   final bool isFloat;
+  final bool isPassword;
   final Function(String) onChange;
   Numpad({
     Key? key,
     required this.length,
     required this.isFloat,
+    required this.isPassword,
     required this.onChange,
   })
       : super(key: key);
@@ -113,7 +118,9 @@ class _NumpadState extends State<Numpad> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Preview(text: number, length: widget.length),
+          widget.isPassword ?
+            PasswordPreview(text: number, length: widget.length) :
+            Preview(text: number, length: widget.length),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -257,10 +264,11 @@ class _NumpadState extends State<Numpad> {
   }
 }
 
-class Preview extends StatelessWidget {
+/// Preview  for Password
+class PasswordPreview extends StatelessWidget {
   final int length;
   final String text;
-  const Preview({Key? key, required this.length, required this.text})
+  const PasswordPreview({Key? key, required this.length, required this.text})
       : super(key: key);
 
   @override
@@ -272,6 +280,28 @@ class Preview extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10.0),
         child: Wrap(children: previewLength));
+  }
+}
+
+class Preview extends StatelessWidget {
+  final int? length;
+  final String text;
+  const Preview({Key? key, this.length, required this.text})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      child: Text(
+        text.isEmpty ? '0' : text,  // textが空の場合は'0'を表示
+        style: TextStyle(
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+    );
   }
 }
 
