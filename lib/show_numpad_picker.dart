@@ -7,35 +7,41 @@ class ShowNumpadPicker {
   }
 }
 
-
 Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
   return showModalBottomSheet<String>(
     context: context,
+    isScrollControlled: true,
     builder: (BuildContext context) {
       String selectedValue = '';
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           return SafeArea(
-            child: Wrap(
-              children: <Widget>[
-                Numpad(
-                  length: length,
-                  onChange: (value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Numpad(
+                    length: length,
+                    onChange: (value) {
+                      setState(() {
+                        selectedValue = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    width: double.infinity, // 横幅を最大に設定
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop(selectedValue);
                       },
-                      child: Text('Done'),
+                      child: Text(
+                        'Done',
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
@@ -43,7 +49,6 @@ Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
     },
   );
 }
-
 
 class Numpad extends StatefulWidget {
   final int length;
