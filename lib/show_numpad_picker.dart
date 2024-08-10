@@ -9,6 +9,7 @@ class ShowNumpadPicker {
 
 Future<String?> showNumpadPicker(BuildContext context, {
   required int length,
+  bool isFloat = false,
   String doneMessage = 'done',
 }) {
   return showModalBottomSheet<String>(
@@ -26,6 +27,7 @@ Future<String?> showNumpadPicker(BuildContext context, {
                 children: <Widget>[
                   Numpad(
                     length: length,
+                    isFloat: isFloat,
                     onChange: (value) {
                       setState(() {
                         selectedValue = value;
@@ -55,8 +57,14 @@ Future<String?> showNumpadPicker(BuildContext context, {
 
 class Numpad extends StatefulWidget {
   final int length;
+  final bool isFloat;
   final Function(String) onChange;
-  Numpad({Key? key, required this.length, required this.onChange})
+  Numpad({
+    Key? key,
+    required this.length,
+    required this.isFloat,
+    required this.onChange,
+  })
       : super(key: key);
 
   @override
@@ -191,21 +199,22 @@ class _NumpadState extends State<Numpad> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              if (false) Expanded(
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: NumpadButton(haveBorder: false),
-                ),
-              ),
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: NumpadButton(
-                    text: '.',
-                    onPressed: () => setValue('.'),
+              widget.isFloat ?
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: NumpadButton(
+                      text: '.',
+                      onPressed: () => setValue('.'),
+                    ),
+                  )
+                ) :
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: NumpadButton(haveBorder: false),
                   ),
                 ),
-              ),
               Expanded(
                 child: AspectRatio(
                   aspectRatio: 1.0,
