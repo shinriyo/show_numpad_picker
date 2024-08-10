@@ -7,7 +7,10 @@ class ShowNumpadPicker {
   }
 }
 
-Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
+Future<String?> showNumpadPicker(BuildContext context, {
+  required int length,
+  String doneMessage = 'done',
+}) {
   return showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
@@ -36,7 +39,7 @@ Future<String?> showNumpadPicker(BuildContext context, {required int length}) {
                         Navigator.of(context).pop(selectedValue);
                       },
                       child: Text(
-                        'Done',
+                        doneMessage,
                       ),
                     ),
                   ),

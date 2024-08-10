@@ -34,9 +34,11 @@ class MyHomePage extends StatelessWidget {
   void _pickNumber(BuildContext context) async {
     final result = await showNumpadPicker(context, length: 4);
     if (result != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Selected number: $result")),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Selected number: $result")),
+        );
+      }
     }
   }
 }
