@@ -12,7 +12,7 @@ Future<dynamic> showNumpadPicker(
   required int length,
   bool isFloat = false,
   bool isPassword = false,
-  String doneMessage = 'done',
+  String doneLabel = 'done',
 }) {
   return showModalBottomSheet<dynamic>(
     context: context,
@@ -58,7 +58,7 @@ Future<dynamic> showNumpadPicker(
                         }
                       },
                       child: Text(
-                        doneMessage,
+                        doneLabel,
                       ),
                     ),
                   ),
