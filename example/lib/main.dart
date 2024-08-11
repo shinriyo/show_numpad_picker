@@ -23,16 +23,24 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Numpad Picker Example')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => _pickNumber(context),
-          child: const Text('Pick a Number'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () => _pickNumber(context, false),
+              child: const Text('Pick a Number (int)'),
+            ),
+            ElevatedButton(
+              onPressed: () => _pickNumber(context, true),
+              child: const Text('Pick a Number (double)'),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void _pickNumber(BuildContext context) async {
-    final result = await showNumpadPicker(context, length: 8, isFloat: true);
+  void _pickNumber(BuildContext context, bool isFloat) async {
+    final result = await showNumpadPicker(context, length: 8, isFloat: isFloat);
     if (result != null) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

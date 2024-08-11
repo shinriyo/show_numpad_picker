@@ -7,13 +7,14 @@ class ShowNumpadPicker {
   }
 }
 
-Future<String?> showNumpadPicker(BuildContext context, {
+Future<dynamic> showNumpadPicker(
+  BuildContext context, {
   required int length,
   bool isFloat = false,
   bool isPassword = false,
   String doneMessage = 'done',
 }) {
-  return showModalBottomSheet<String>(
+  return showModalBottomSheet<dynamic>(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
@@ -41,7 +42,20 @@ Future<String?> showNumpadPicker(BuildContext context, {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop(selectedValue);
+                        if (isFloat) {
+                          // double
+                          Navigator.of(context).pop(
+                            double.tryParse(selectedValue),
+                          );
+                        } else if (!isFloat) {
+                          // int
+                          Navigator.of(context).pop(
+                            int.tryParse(selectedValue),
+                          );
+                        } else {
+                          // other is null
+                          Navigator.of(context).pop(null);
+                        }
                       },
                       child: Text(
                         doneMessage,
