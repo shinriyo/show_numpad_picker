@@ -1,3 +1,6 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+- Initial release of the `show_numpad_picker` plugin.
+- Added support for integer and floating-point number inputs.
+- Customizable numpad layout and real-time input preview.
+
