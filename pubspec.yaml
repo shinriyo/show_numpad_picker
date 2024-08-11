@@ -1,7 +1,6 @@
 name: show_numpad_picker
 description: A Flutter plugin that provides a customizable numpad picker for numeric input. Supports both integer and floating-point inputs, with features like real-time preview and easy configuration for various input scenarios.
 version: 1.0.0
-author: shinriyo <shinriyo@gmail.com>
 homepage: https://shinriyo.hateblo.jp/
 repository: https://github.com/shinriyo/show_numpad_picker
 issue_tracker: https://github.com/shinriyo/show_numpad_picker/issues
